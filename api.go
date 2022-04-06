@@ -16,7 +16,7 @@ func Routers(r *gin.RouterGroup) {
 	r.POST("/:app/:auid", SendToWS)
 }
 
-//TestHandler socket 连接 中间件 作用:升级协议,用户验证,自定义信息等
+//socket 连接 中间件 作用:升级协议,用户验证,自定义信息等
 func WsHandler(c *gin.Context) {
 	ws := &websocket.Upgrader{
 		//设置允许跨域

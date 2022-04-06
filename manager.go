@@ -45,7 +45,7 @@ func (manager *ClientManager) Start() {
 
 //注册
 func (manager *ClientManager) register(client *Client) {
-	log.Printf("新用户加入:%v, %v", client.AppKey, client.Auid)
+	log.Printf("新用户加入, appkey: %v, auid: %v", client.AppKey, client.Auid)
 	manager.addClient(client)
 	jsonMessage, _ := json.Marshal(gowk.Response().Message(gowk.ERR_WS_CONTENT, gowk.M{"appName": client.App.Name}))
 	client.Send <- jsonMessage
@@ -53,7 +53,7 @@ func (manager *ClientManager) register(client *Client) {
 
 //离开
 func (manager *ClientManager) unregister(client *Client) {
-	log.Printf("用户离开:%v, %v", client.AppKey, client.Auid)
+	log.Printf("用户离开, appkey: %v, auid: %v", client.AppKey, client.Auid)
 	if old := manager.getClient(client.AppKey, client.Auid); old != nil {
 		jsonMessage, _ := json.Marshal(gowk.Response().Message(gowk.ERR_WS_CLOSE, nil))
 		old.Send <- jsonMessage
