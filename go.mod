@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/autrec/auth v0.0.0-20220416063801-91048121eea2
-	github.com/autrec/gowk v0.0.0-20220416053957-f934b619da70
+	github.com/autrec/gowk v0.0.0-20220416100642-3c670d1e8b6e
 	github.com/gin-gonic/gin v1.7.7
 	github.com/gorilla/websocket v1.5.0
 )
