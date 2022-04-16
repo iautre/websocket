@@ -28,22 +28,29 @@ func WsHandler(c *gin.Context) {
 		http.NotFound(c.Writer, c.Request)
 		return
 	}
+	// defer func() {
+	// 	if err := gowk.Recover(); err != nil {
+	// 		conn.WriteJSON(gowk.Response().Message(err, nil))
+	// 		conn.Close()
+	// 	}
+	// }
+	defer func() {
+		if err := recover(); err != nil {
+			var errMsg *gowk.ErrorCode
+			err := json.Unmarshal([]byte(string(err.(string))), &errMsg)
+			if err != nil {
+				errMsg = gowk.ERR_UN
+			}
+			conn.WriteJSON(gowk.Response().Message(errMsg, nil))
+			conn.Close()
+		}
+	}()
 	appkey := c.Query("appkey")
-	app, err := auth.CheckApp(appkey)
-	if err != nil {
-		conn.WriteJSON(gowk.Response().Message(gowk.ERR_NOAPP, nil))
-		conn.Close()
-		return
-	}
+	token := c.Query("token")
+	app := auth.CheckApp(appkey)
 	//通过token解析出auid
-	claims, err := auth.GetClaims(c.Query("token"))
+	claims := auth.GetClaims(token)
 	//校验token失败 断开连接
-	if err != nil {
-		conn.WriteJSON(gowk.Response().Message(gowk.ERR_TOKEN, nil))
-		conn.Close()
-		return
-	}
-
 	client := &Client{
 		AppKey: appkey,
 		Auid:   claims.Auid,
@@ -77,7 +84,7 @@ func SendToWS(c *gin.Context) {
 	}
 	err = SendMessage(c, messageInfo)
 	if err != nil {
-		gowk.Response().Fail(c, gowk.NewError(500, "目标不在线"), nil)
+		gowk.Response().Fail(c, gowk.NewErrorCode(500, "目标不在线"), nil)
 		return
 	}
 	gowk.Response().Success(c, nil)
