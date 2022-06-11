@@ -8,13 +8,13 @@ import (
 
 type MessageInfo struct {
 	AppKey  string
-	Auid    string
+	Auid    uint
 	Message []byte
 }
 
 type ClientInfo struct {
 	AppKey string
-	Auid   string
+	Auid   uint
 }
 
 type MessageHandler interface {

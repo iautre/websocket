@@ -1,13 +1,8 @@
-module github.com/autrec/websocket
+module github.com/iautre/websocket
 
 go 1.18
 
-require (
-	github.com/autrec/auth v0.0.0-20220416063801-91048121eea2
-	github.com/autrec/gowk v0.0.0-20220416100642-3c670d1e8b6e
-	github.com/gin-gonic/gin v1.7.7
-	github.com/gorilla/websocket v1.5.0
-)
+require github.com/gin-gonic/gin v1.7.7
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
@@ -21,7 +16,10 @@ require (
 	github.com/go-stack/stack v1.8.1 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
+	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
+	github.com/iautre/auth v0.0.0-20220611144024-35681c42ae2b // indirect
+	github.com/iautre/gowk v0.0.0-20220611143237-50cb04188fbc // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect

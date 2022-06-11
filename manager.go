@@ -5,7 +5,7 @@ import (
 	"log"
 	"sync"
 
-	"github.com/autrec/gowk"
+	"github.com/iautre/gowk"
 )
 
 func init() {
@@ -77,7 +77,7 @@ func (manager *ClientManager) broadcast(message []byte) {
 }
 
 // 移除客户端
-func (manager *ClientManager) removeClient(appkey string, auid string) {
+func (manager *ClientManager) removeClient(appkey string, auid uint) {
 	manager.Lock.Lock()
 	defer manager.Lock.Unlock()
 	if group, ok := manager.ClientGroup[appkey]; ok {
@@ -93,13 +93,13 @@ func (manager *ClientManager) addClient(client *Client) {
 	defer manager.Lock.Unlock()
 	_, ok := manager.ClientGroup[client.AppKey]
 	if ok == false {
-		manager.ClientGroup[client.AppKey] = &ClientGroup{Clients: make(map[string]*Client)}
+		manager.ClientGroup[client.AppKey] = &ClientGroup{Clients: make(map[uint]*Client)}
 	}
 	manager.ClientGroup[client.AppKey].Clients[client.Auid] = client
 }
 
 // 获取客户端
-func (manager *ClientManager) getClient(appkey string, auid string) *Client {
+func (manager *ClientManager) getClient(appkey string, auid uint) *Client {
 	manager.Lock.Lock()
 	defer manager.Lock.Unlock()
 	if group, ok := manager.ClientGroup[appkey]; ok {

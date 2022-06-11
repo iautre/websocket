@@ -3,16 +3,16 @@ package websocket
 import (
 	"fmt"
 
-	"github.com/autrec/auth/model"
-	"github.com/autrec/gowk"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
+	"github.com/iautre/auth/model"
+	"github.com/iautre/gowk"
 )
 
 // 客户端信息
 type Client struct {
 	AppKey string
-	Auid   string
+	Auid   uint
 	Socket *websocket.Conn
 	Send   chan []byte
 	Ctx    *gin.Context
@@ -20,7 +20,7 @@ type Client struct {
 }
 
 type ClientGroup struct {
-	Clients map[string]*Client
+	Clients map[uint]*Client
 }
 
 // 读取消息

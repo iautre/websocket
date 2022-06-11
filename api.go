@@ -3,11 +3,12 @@ package websocket
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
-	"github.com/autrec/auth"
-	"github.com/autrec/gowk"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
+	"github.com/iautre/auth"
+	"github.com/iautre/gowk"
 )
 
 func Routers(r *gin.RouterGroup) {
@@ -67,7 +68,7 @@ func WsHandler(c *gin.Context) {
 //发送消息
 func SendToWS(c *gin.Context) {
 	appkey := c.Param("app")
-	auid := c.Param("auid")
+	auid, _ := strconv.Atoi(c.Param("auid"))
 	var content map[string]interface{}
 	err := c.ShouldBind(&content)
 	if err != nil {
@@ -79,7 +80,7 @@ func SendToWS(c *gin.Context) {
 	message, _ := json.Marshal(content)
 	messageInfo := &MessageInfo{
 		AppKey:  appkey,
-		Auid:    auid,
+		Auid:    uint(auid),
 		Message: message,
 	}
 	err = SendMessage(c, messageInfo)
